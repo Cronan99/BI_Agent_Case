@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -68,6 +70,10 @@ def get_user_brands(
 @app.get("/users/{user_id}/sales/summary")
 def sales_summary(
     user_id: str,
+    start_date: date | None = None,
+    end_date: date | None = None,
+    region: str | None = None,
+    city: str | None = None,
     db: Session = Depends(get_db),
 ):
     user = (
@@ -82,4 +88,11 @@ def sales_summary(
             detail=f"User with ID {user_id} not found"
         )
 
-    return get_sales_summary(db, user_id)
+    return get_sales_summary(
+        db=db,
+        user_id=user_id,
+        start_date=start_date,
+        end_date=end_date,
+        region=region,
+        city=city,
+    )
