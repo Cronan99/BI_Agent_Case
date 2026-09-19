@@ -18,7 +18,7 @@ def get_sales_summary(db: Session, user_id: str):
 
     result = (
         db.query(
-            func.sum(models.Order.line_total_sek)
+            func.sum(models.Order.line_total_sek),
             func.sum(models.Order.quantity),
             func.count(models.Order.order_line_id),
         )
@@ -26,7 +26,7 @@ def get_sales_summary(db: Session, user_id: str):
             models.Product,
             models.Order.product_id == models.Product.product_id,
         )
-        .filter(models.Product.brand_id.in(brand_ids))
+        .filter(models.Product.brand_id.in_(brand_ids))
         .first()
     )
 
