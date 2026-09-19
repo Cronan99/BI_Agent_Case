@@ -1,6 +1,7 @@
 from datetime import date
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -13,6 +14,7 @@ from .services.auth_service import (
     create_access_token,
     get_current_user
 )
+from .agent.agent import ask_agent
 
 
 app = FastAPI(
@@ -20,9 +22,20 @@ app = FastAPI(
     version="0.1.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+class ChatRequest(BaseModel):
+    message: str
 
 
 @app.get("/")
@@ -138,3 +151,17 @@ def get_me(
             for access in current_user.brand_access
         ]
     }
+
+@app.post("/chat")
+def chat(
+    request: ChatRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    answer = ask_agent(
+        message=request.message,
+        db=db,
+        current_user=current_user,
+    )
+
+    return {"answer": answer}
