@@ -3,16 +3,22 @@ from datetime import date
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 
 from . import models
 from .database import get_db
 from .services.sales_service import get_sales_summary
+from .services.auth_service import authenticate_user
 
 
 app = FastAPI(
     title="Solvigo AI Case API",
     version="0.1.0",
 )
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
 
 
 @app.get("/")
@@ -96,3 +102,26 @@ def sales_summary(
         region=region,
         city=city,
     )
+
+@app.post("/auth/login")
+def login(
+    credentials: LoginRequest,
+    db: Session = Depends(get_db),
+):
+    user = authenticate_user(
+        db=db,
+        email=credentials.email,
+        password=credentials.password,
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    return {
+        "user_id": user.user_id,
+        "full_name": user.full_name,
+        "email": user.email,
+    }
