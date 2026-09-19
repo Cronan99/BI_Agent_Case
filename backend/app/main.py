@@ -119,3 +119,22 @@ def login(
         "access_token": access_token,
         "token_type": "bearer",
     }
+
+@app.get("/auth/me")
+def get_me(
+    current_user: models.User = Depends(get_current_user),
+):
+    return {
+        "user_id": current_user.user_id,
+        "full_name": current_user.full_name,
+        "email": current_user.email,
+        "company": current_user.company,
+        "role": current_user.role,
+        "brands": [
+            {
+                "brand_id": access.brand.brand_id,
+                "brand_name": access.brand.brand_name,
+            }
+            for access in current_user.brand_access
+        ]
+    }
