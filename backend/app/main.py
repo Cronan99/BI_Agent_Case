@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from . import models
 from .database import get_db
+from .services.sales_service import get_sales_summary
 
 
 app = FastAPI(
@@ -63,3 +64,22 @@ def get_user_brands(
     )
 
     return brands
+
+@app.get("/users/{user_id}/sales/summary")
+def sales_summary(
+    user_id: str,
+    db: Session = Depends(get_db),
+):
+    user = (
+        db.query(models.User)
+        .filter(models.User.user_id == user_id)
+        .first()
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail=f"User with ID {user_id} not found"
+        )
+
+    return get_sales_summary(db, user_id)
