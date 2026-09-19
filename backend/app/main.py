@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from . import models
 from .database import get_db
 
 
@@ -26,3 +27,26 @@ def health(db: Session = Depends(get_db)):
         "status": "ok",
         "database": "connected",
     }
+
+@app.get("/brands")
+def get_brands(db: Session = Depends(get_db)):
+    brands = db.query(models.Brand).all()
+
+    return brands
+
+@app.get("/users/{user_id}/brands")
+def get_user_brands(
+    user_id: str,
+    db: Session = Depends(get_db),
+):
+    brands = (
+        db.query(models.Brand)
+        .join(
+            models.UserBrandAccess,
+            models.Brand.brand_id == models.UserBrandAccess.brand_id,
+        )
+        .filter(models.UserBrandAccess.user_id == user_id)
+        .all()
+    )
+
+    return brands
