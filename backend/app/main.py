@@ -9,6 +9,10 @@ from . import models
 from .database import get_db
 from .services.sales_service import get_sales_summary
 from .services.auth_service import authenticate_user
+from .services.auth_service import (
+    authenticate_user,
+    create_access_token,
+)
 
 
 app = FastAPI(
@@ -120,8 +124,9 @@ def login(
             detail="Invalid email or password"
         )
 
+    access_token = create_access_token(user_id=user.user_id)
+
     return {
-        "user_id": user.user_id,
-        "full_name": user.full_name,
-        "email": user.email,
+        "access_token": access_token,
+        "token_type": "bearer",
     }
