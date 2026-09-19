@@ -29,7 +29,7 @@ def get_sales_summary(
         db.query(
             func.sum(models.Order.line_total_sek).label("revenue_sek"),
             func.sum(models.Order.quantity).label("units_sold"),
-            func.count(models.Order.order_line_id).label("order_lines"),
+            func.count(func.distinct(models.Order.order_id)).label("orders"),
         )
         .join(
             models.Product,
@@ -57,7 +57,7 @@ def get_sales_summary(
     result = query.first()
 
     return {
-        "revenue": result.revenue_sek or 0,
-        "products": result.units_sold or 0,
-        "orders": result.order_lines or 0,
+        "revenue_sek": result.revenue_sek or 0,
+        "units_sold": result.units_sold or 0,
+        "orders": result.orders or 0,
     }

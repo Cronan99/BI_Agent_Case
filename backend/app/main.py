@@ -8,10 +8,10 @@ from pydantic import BaseModel
 from . import models
 from .database import get_db
 from .services.sales_service import get_sales_summary
-from .services.auth_service import authenticate_user
 from .services.auth_service import (
     authenticate_user,
     create_access_token,
+    get_current_user
 )
 
 
@@ -77,30 +77,19 @@ def get_user_brands(
 
     return brands
 
-@app.get("/users/{user_id}/sales/summary")
+@app.get("/sales/summary")
 def sales_summary(
-    user_id: str,
     start_date: date | None = None,
     end_date: date | None = None,
     region: str | None = None,
     city: str | None = None,
     db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
-    user = (
-        db.query(models.User)
-        .filter(models.User.user_id == user_id)
-        .first()
-    )
-
-    if not user:
-        raise HTTPException(
-            status_code=404,
-            detail=f"User with ID {user_id} not found"
-        )
 
     return get_sales_summary(
         db=db,
-        user_id=user_id,
+        user_id=current_user.user_id,
         start_date=start_date,
         end_date=end_date,
         region=region,
