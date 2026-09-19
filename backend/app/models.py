@@ -11,6 +11,9 @@ class Brand(Base):
     brand_name = Column(String(255), nullable=False)
     supplier = Column(String(255), nullable=False)
 
+    products = relationship("Product", back_populates="brand")
+    user_access = relationship("UserBrandAccess", back_populates="brand")
+
 
 class Product(Base):
     __tablename__ = "products"
@@ -21,6 +24,9 @@ class Product(Base):
     category = Column(String(100), nullable=False)
     unit_price_sek = Column(Integer, nullable=False)
 
+    brand = relationship("Brand", back_populates="products")
+    orders = relationship("Order", back_populates="product")
+
 
 class Store(Base):
     __tablename__ = "stores"
@@ -30,6 +36,7 @@ class Store(Base):
     city = Column(String(100), nullable=False)
     region = Column(String(100), nullable=False)
 
+    orders = relationship("Order", back_populates="store")
 
 class User(Base):
     __tablename__ = "users"
@@ -39,6 +46,8 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False)
     company = Column(String(255), nullable=False)
     role = Column(String(100), nullable=False)
+
+    brand_access = relationship("UserBrandAccess", back_populates="user")
 
 
 class UserBrandAccess(Base):
@@ -55,6 +64,9 @@ class UserBrandAccess(Base):
         ForeignKey("brands.brand_id"),
         primary_key=True,
     )
+
+    user = relationship("User", back_populates="brand_access")
+    brand = relationship("Brand", back_populates="user_access")
 
 
 class Order(Base):
@@ -79,3 +91,6 @@ class Order(Base):
     quantity = Column(Integer, nullable=False)
     unit_price_sek = Column(Integer, nullable=False)
     line_total_sek = Column(Integer, nullable=False)
+
+    store = relationship("Store", back_populates="orders")
+    product = relationship("Product", back_populates="orders")
