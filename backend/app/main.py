@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
@@ -39,6 +39,19 @@ def get_user_brands(
     user_id: str,
     db: Session = Depends(get_db),
 ):
+
+    user = (
+        db.query(models.User)
+        .filter(models.User.user_id == user_id)
+        .first()
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail=f"User with ID {user_id} not found"
+        )
+    
     brands = (
         db.query(models.Brand)
         .join(
