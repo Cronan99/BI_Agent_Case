@@ -46,6 +46,7 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False)
     company = Column(String(255), nullable=False)
     role = Column(String(100), nullable=False)
+    password_hash = Column(String(255), nullable=True) #TODO: Make this non-nullable later
 
     brand_access = relationship("UserBrandAccess", back_populates="user")
 
