@@ -2,12 +2,15 @@ services:
   db:
     image: postgres:17
     container_name: solvigo_db
+
     environment:
       POSTGRES_DB: solvigo
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: solvigo_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

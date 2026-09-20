@@ -1,14 +1,11 @@
 from pathlib import Path
 
 import pandas as pd
-from sqlalchemy import create_engine
+
+from backend.app.database import engine
 
 
 DATA_DIR = Path(__file__).parent.parent / "data"
-
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/solvigo"
-
-engine = create_engine(DATABASE_URL)
 
 
 def import_csv(filename: str, table_name: str):
@@ -22,7 +19,7 @@ def import_csv(filename: str, table_name: str):
         table_name,
         engine,
         if_exists="append",
-        index=False
+        index=False,
     )
 
     print(f"Imported {len(df)} rows into {table_name}")
