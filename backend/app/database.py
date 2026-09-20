@@ -7,19 +7,23 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not POSTGRES_PASSWORD:
-    raise RuntimeError("POSTGRES_PASSWORD is not set")
+if not DATABASE_URL:
+    POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 
-DATABASE_URL = URL.create(
-    drivername="postgresql+psycopg2",
-    username="solvigo_app",
-    password=POSTGRES_PASSWORD,
-    host="localhost",
-    port=5432,
-    database="solvigo",
-)
+    if not POSTGRES_PASSWORD:
+        raise RuntimeError("POSTGRES_PASSWORD is not set")
+
+    DATABASE_URL = URL.create(
+        drivername="postgresql+psycopg2",
+        username="solvigo_app",
+        password=POSTGRES_PASSWORD,
+        host="localhost",
+        port=5432,
+        database="solvigo",
+    )
+
 
 engine = create_engine(DATABASE_URL)
 
