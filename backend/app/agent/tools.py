@@ -29,3 +29,25 @@ def sales_summary_tool(
         region=region,
         city=city,
     )
+
+def top_products_tool(
+    db: Session,
+    current_user: models.User,
+    limit: int = 5,
+    start_date: date | None = None,
+    end_date: date | None = None,
+    region: str | None = None,
+    city: str | None = None,
+):
+    """
+    Return the top-selling products within the authenticated user's accessible brands.
+    """
+    return get_top_products(
+        db=db,
+        user_id=current_user.user_id,
+        limit=limit,
+        start_date=start_date,
+        end_date=end_date,
+        region=region,
+        city=city,
+    )
