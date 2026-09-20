@@ -3,7 +3,7 @@ from datetime import date
 from sqlalchemy.orm import Session
 
 from .. import models
-from ..services.sales_service import get_sales_summary
+from ..services.sales_service import get_sales_summary, get_top_products
 
 
 def sales_summary_tool(
