@@ -7,7 +7,9 @@ from google.genai import types
 from sqlalchemy.orm import Session
 
 from .. import models
-from .tools import sales_summary_tool, top_products_tool
+from .tools import (sales_summary_tool,
+                     top_products_tool,
+                     sales_breakdown_tool)
 
 
 load_dotenv()
@@ -86,10 +88,45 @@ top_products_declaration = types.FunctionDeclaration(
     },
 )
 
+sales_breakdown_declaration = types.FunctionDeclaration(
+    name="get_sales_breakdown",
+    description=(
+        "Get sales grouped by brand, category, region, or city for the "
+        "authenticated user's accessible brands. Use this when the user "
+        "asks how sales are distributed or wants to compare sales between "
+        "brands, categories, regions, or cities."
+    ),
+    parameters={
+        "type": "object",
+        "properties": {
+            "group_by": {
+                "type": "string",
+                "enum": [
+                    "brand",
+                    "category",
+                    "region",
+                    "city",
+                ],
+                "description": "Dimension to group the sales by.",
+            },
+            "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format.",
+            },
+            "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format.",
+            },
+        },
+        "required": ["group_by"],
+    },
+)
+
 sales_tools = types.Tool(
     function_declarations=[
         sales_summary_declaration,
         top_products_declaration,
+        sales_breakdown_declaration,
         ]
 )
 
@@ -129,6 +166,15 @@ def execute_tool(
             city=args.get("city"),
         )
 
+    if function_call.name == "get_sales_breakdown":
+        return sales_breakdown_tool(
+            db=db,
+            current_user=current_user,
+            group_by=args["group_by"],
+            start_date=parse_date(args.get("start_date")),
+            end_date=parse_date(args.get("end_date")),
+        )
+
     raise ValueError(
         f"Unknown tool: {function_call.name}"
     )
@@ -146,6 +192,8 @@ def ask_agent(
             "The available sales data covers January 2025 through June 2026. "
             "Answer questions using the available sales tools. "
             "Never invent sales numbers. "
+            "Never invent dates or time periods that the user did not specify. "
+            "If the user's requested time period is ambiguous, ask for clarification. "
             "All numerical sales facts must come from tool results. "
             "If the available data cannot answer the question, "
             "clearly explain that. "
@@ -165,7 +213,7 @@ def ask_agent(
         )
     ]
 
-    max_tool_calls = 5
+    max_tool_calls = 3
 
     for _ in range(max_tool_calls):
         response = client.models.generate_content(

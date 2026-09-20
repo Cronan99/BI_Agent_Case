@@ -123,3 +123,66 @@ def get_top_products(
         }
         for row in results
     ]
+
+def get_sales_breakdown(
+        db: Session,
+        user_id: str,
+        group_by: str,
+        start_date: date | None = None,
+        end_date: date | None = None,
+):
+    brand_ids = get_user_brand_ids(db, user_id)
+
+    if not brand_ids:
+        return []
+
+    group_columns = {
+        "brand": (models.Brand.brand_name, "brand"),
+        "category": (models.Product.category, "category"),
+        "region": (models.Store.region, "region"),
+        "city": (models.Store.city, "city"),
+    }
+
+    if group_by not in group_columns:
+        raise ValueError(
+            f"Invalid group_by '{group_by}'."
+            f"Allowed values: {', '.join(group_columns.keys())}"
+        )
+
+    group_columns, group_name = group_columns[group_by]
+
+    query = (
+        db.query(
+            group_columns.label("group_value"),
+            func.sum(models.Order.line_total_sek).label("revenue_sek"),
+            func.sum(models.Order.quantity).label("units_sold"),
+            func.count(func.distinct(models.Order.order_id)).label("orders"),
+        )
+        .join(models.Product, models.Order.product_id == models.Product.product_id)
+        .join(models.Store, models.Order.store_id == models.Store.store_id)
+        .join(models.Brand, models.Product.brand_id == models.Brand.brand_id)
+        .filter(models.Product.brand_id.in_(brand_ids))
+    )
+
+    if start_date:
+        query = query.filter(
+            models.Order.order_date >= start_date
+        )
+
+        results = (
+            query
+            .group_by(group_columns)
+            .order_by(func.sum(models.Order.line_total_sek).desc()
+            )
+            .all()
+        )
+
+    return [
+        {
+            group_name: row.group_value,
+            "revenue_sek": row.revenue_sek,
+            "units_sold": row.units_sold,
+            "orders": row.orders,
+        }
+        for row in results
+    ]
