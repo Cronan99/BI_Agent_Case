@@ -10,4 +10,6 @@ COPY backend ./backend
 COPY scripts ./scripts
 COPY data ./data
 
-CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN chmod +x backend/entrypoint.sh
+
+CMD ["./backend/entrypoint.sh"]

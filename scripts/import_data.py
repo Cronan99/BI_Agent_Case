@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
+from sqlalchemy import text
 
 from backend.app.database import engine
 
@@ -8,7 +9,19 @@ from backend.app.database import engine
 DATA_DIR = Path(__file__).parent.parent / "data"
 
 
+def table_has_data(table_name: str) -> bool:
+    with engine.connect() as connection:
+        result = connection.execute(
+            text(f"SELECT EXISTS (SELECT 1 FROM {table_name} LIMIT 1)")
+        )
+        return result.scalar()
+
+
 def import_csv(filename: str, table_name: str):
+    if table_has_data(table_name):
+        print(f"Skipping {table_name}: data already exists")
+        return
+
     filepath = DATA_DIR / filename
 
     print(f"Importing {filename}...")

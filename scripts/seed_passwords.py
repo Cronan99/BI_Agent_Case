@@ -10,7 +10,11 @@ def main():
     db = SessionLocal()
 
     try:
-        users = db.query(User).all()
+        users = (
+            db.query(User)
+            .filter(User.password_hash.is_(None))
+            .all()
+        )
 
         for user in users:
             user.password_hash = hash_password(DEMO_PASSWORD)
