@@ -5,7 +5,8 @@ from sqlalchemy.orm import Session
 from .. import models
 from ..services.sales_service import (get_sales_summary,
                                        get_top_products,
-                                       get_sales_breakdown)
+                                       get_sales_breakdown,
+                                       get_sales_trend)
 
 
 def sales_summary_tool(
@@ -67,6 +68,24 @@ def sales_breakdown_tool(
         db=db,
         user_id=current_user.user_id,
         group_by=group_by,
+        start_date=start_date,
+        end_date=end_date,
+    )
+
+def sales_trend_tool(
+    db: Session,
+    current_user: models.User,
+    granularity: str = "month",
+    start_date: date | None = None,
+    end_date: date | None = None,
+):
+    """
+    Return sales trends within users brand access in different granularities"
+    """
+    return get_sales_trend(
+        db=db,
+        user_id=current_user.user_id,
+        granularity=granularity,
         start_date=start_date,
         end_date=end_date,
     )

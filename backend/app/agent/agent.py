@@ -9,7 +9,8 @@ from sqlalchemy.orm import Session
 from .. import models
 from .tools import (sales_summary_tool,
                      top_products_tool,
-                     sales_breakdown_tool)
+                     sales_breakdown_tool,
+                     sales_trend_tool,)
 
 
 load_dotenv()
@@ -122,11 +123,42 @@ sales_breakdown_declaration = types.FunctionDeclaration(
     },
 )
 
+sales_trend_declaration = types.FunctionDeclaration(
+    name="get_sales_trend",
+    description=(
+        "Get sales over time for the authenticated user's accessible brands. "
+        "Use this when the user asks how sales have developed, changed, "
+        "or trended over time."
+    ),
+    parameters={
+        "type": "object",
+        "properties": {
+            "granularity": {
+                "type": "string",
+                "enum": ["week", "month"],
+                "description": (
+                    "Time interval used to group sales. "
+                    "Use month by default unless weekly detail is requested."
+                ),
+            },
+            "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format.",
+            },
+            "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format.",
+            },
+        },
+    },
+)
+
 sales_tools = types.Tool(
     function_declarations=[
         sales_summary_declaration,
         top_products_declaration,
         sales_breakdown_declaration,
+        sales_trend_declaration,
         ]
 )
 
@@ -175,6 +207,15 @@ def execute_tool(
             end_date=parse_date(args.get("end_date")),
         )
 
+    if function_call.name == "get_sales_trend":
+        return sales_trend_tool(
+            db=db,
+            current_user=current_user,
+            granularity=args.get("granularity", "month"),
+            start_date=parse_date(args.get("start_date")),
+            end_date=parse_date(args.get("end_date")),
+        )
+
     raise ValueError(
         f"Unknown tool: {function_call.name}"
     )
@@ -213,7 +254,7 @@ def ask_agent(
         )
     ]
 
-    max_tool_calls = 3
+    max_tool_calls = 4
 
     for _ in range(max_tool_calls):
         response = client.models.generate_content(
