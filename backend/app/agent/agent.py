@@ -19,7 +19,7 @@ if not GEMINI_API_KEY:
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-MODEL = "gemini-3.8-flash"
+MODEL = "gemini-3.5-flash"
 
 
 sales_summary_declaration = types.FunctionDeclaration(
@@ -143,6 +143,7 @@ def ask_agent(
     config = types.GenerateContentConfig(
         system_instruction=(
             "You are a sales insights assistant. "
+            "The available sales data covers January 2025 through June 2026. "
             "Answer questions using the available sales tools. "
             "Never invent sales numbers. "
             "All numerical sales facts must come from tool results. "
@@ -164,42 +165,45 @@ def ask_agent(
         )
     ]
 
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=contents,
-        config=config,
-    )
+    max_tool_calls = 5
 
-    if not response.function_calls:
-        return response.text
-
-    function_call = response.function_calls[0]
-
-    # Execute tools server-side with the authenticated user context.
-    tool_result = execute_tool(
-        function_call=function_call,
-        db=db,
-        current_user=current_user,
-    )
-
-    contents.append(response.candidates[0].content)
-
-    function_response = types.Part.from_function_response(
-        name=function_call.name,
-        response={"result": tool_result},
-    )
-
-    contents.append(
-        types.Content(
-            role="user",
-            parts=[function_response],
+    for _ in range(max_tool_calls):
+        response = client.models.generate_content(
+            model=MODEL,
+            contents=contents,
+            config=config,
         )
-    )
 
-    final_response = client.models.generate_content(
-        model=MODEL,
-        contents=contents,
-        config=config,
-    )
+        if not response.function_calls:
+            return response.text
 
-    return final_response.text
+        contents.append(
+            response.candidates[0].content
+        )
+
+        function_response_parts = []
+
+        for function_call in response.function_calls:
+            tool_result = execute_tool(
+                function_call=function_call,
+                db=db,
+                current_user=current_user,
+            )
+
+            function_response_parts.append(
+                types.Part.from_function_response(
+                    name=function_call.name,
+                    response={"result": tool_result},
+                )
+            )
+
+        contents.append(
+            types.Content(
+                role="user",
+                parts=function_response_parts,
+            )
+        )
+
+    raise RuntimeError(
+        "Agent exceeded maximum number of tool calls"
+    )
