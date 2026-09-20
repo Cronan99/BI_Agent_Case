@@ -1,0 +1,29 @@
+store_id,store_name,city,region
+S001,Handlarn Stockholm City,Stockholm,Svealand
+S002,Butik Nord Stockholm Centrum,Stockholm,Svealand
+S003,Matgrossen Stockholm Söder,Stockholm,Svealand
+S004,Vardagslivs Göteborg City,Göteborg,Götaland
+S005,Handlarn Göteborg Centrum,Göteborg,Götaland
+S006,Butik Nord Göteborg Söder,Göteborg,Götaland
+S007,Prisma Market Malmö City,Malmö,Götaland
+S008,Vardagslivs Malmö Centrum,Malmö,Götaland
+S009,Vardagslivs Uppsala City,Uppsala,Svealand
+S010,Handlarn Uppsala Centrum,Uppsala,Svealand
+S011,Handlarn Västerås,Västerås,Svealand
+S012,Prisma Market Örebro,Örebro,Svealand
+S013,Butik Nord Linköping,Linköping,Götaland
+S014,Vardagslivs Jönköping,Jönköping,Götaland
+S015,Matgrossen Helsingborg,Helsingborg,Götaland
+S016,Handlarn Borås,Borås,Götaland
+S017,Prisma Market Karlstad,Karlstad,Svealand
+S018,Butik Nord Gävle,Gävle,Norrland
+S019,Vardagslivs Sundsvall City,Sundsvall,Norrland
+S020,Handlarn Sundsvall Centrum,Sundsvall,Norrland
+S021,Handlarn Umeå City,Umeå,Norrland
+S022,Butik Nord Umeå Centrum,Umeå,Norrland
+S023,Butik Nord Luleå,Luleå,Norrland
+S024,Vardagslivs Östersund,Östersund,Norrland
+S025,Matgrossen Skellefteå,Skellefteå,Norrland
+S026,Handlarn Eskilstuna,Eskilstuna,Svealand
+S027,Prisma Market Norrköping,Norrköping,Götaland
+S028,Butik Nord Halmstad,Halmstad,Götaland

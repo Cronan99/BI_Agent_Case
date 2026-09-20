@@ -1,0 +1,99 @@
+product_id,product_name,brand_id,category,unit_price_sek
+P001,Fjällkraft Grillkol Premium 5 kg,B01,Grill & Utomhus,89
+P002,Fjällkraft Grillkol Ekonomi 3 kg,B01,Grill & Utomhus,49
+P003,Fjällkraft Tändvätska 1 L,B01,Grill & Utomhus,39
+P004,Fjällkraft Tändkuber 32-pack,B01,Grill & Utomhus,29
+P005,Fjällkraft Engångsgrill Classic,B01,Grill & Utomhus,59
+P006,Fjällkraft Grillspett rostfria 6-pack,B01,Grill & Utomhus,79
+P007,Fjällkraft Grillgaller justerbart,B01,Grill & Utomhus,149
+P008,Fjällkraft Grillhandske läder,B01,Grill & Utomhus,129
+P009,Fjällkraft Grilltermometer digital,B01,Grill & Utomhus,199
+P010,Fjällkraft Rökspån hickory 1 kg,B01,Grill & Utomhus,69
+P011,Fjällkraft Grillrengöring spray,B01,Grill & Utomhus,55
+P012,Fjällkraft Kolstartare,B01,Grill & Utomhus,179
+P013,Fjällkraft Grillfolie extra stark,B01,Grill & Utomhus,35
+P014,Fjällkraft Marinadpensel silikon,B01,Grill & Utomhus,45
+P015,Averma Handkräm Havtorn 75 ml,B02,Hudvård,65
+P016,Averma Ansiktskräm Dag 50 ml,B02,Hudvård,149
+P017,Averma Ansiktskräm Natt 50 ml,B02,Hudvård,169
+P018,Averma Duschkräm Björk 250 ml,B02,Hudvård,55
+P019,Averma Bodylotion Ceder 400 ml,B02,Hudvård,89
+P020,Averma Läppbalsam Hallon,B02,Hudvård,35
+P021,Averma Solskydd SPF30 200 ml,B02,Hudvård,119
+P022,Averma Solskydd SPF50 200 ml,B02,Hudvård,139
+P023,Averma Schampo Nässla 300 ml,B02,Hudvård,75
+P024,Averma Balsam Nässla 300 ml,B02,Hudvård,75
+P025,Averma Fotkräm Salvia 100 ml,B02,Hudvård,69
+P026,Averma Rakgel Sensitive 200 ml,B02,Hudvård,59
+P027,Averma Deodorant Tall 50 ml,B02,Hudvård,49
+P028,Averma Ansiktsmask Lera 100 ml,B02,Hudvård,95
+P029,Polarglans Allrengöring Citrus 750 ml,B03,Rengöring,42
+P030,Polarglans Fönsterputs 500 ml,B03,Rengöring,38
+P031,Polarglans Diskmedel Ekologiskt 500 ml,B03,Rengöring,32
+P032,Polarglans Tvättmedel Vit 1 kg,B03,Rengöring,79
+P033,Polarglans Tvättmedel Kulör 1 kg,B03,Rengöring,79
+P034,Polarglans Sköljmedel Vinter 750 ml,B03,Rengöring,45
+P035,Polarglans Golvrengöring Trä 1 L,B03,Rengöring,65
+P036,Polarglans Badrumsrengöring 750 ml,B03,Rengöring,48
+P037,Polarglans Ugnsrengöring 500 ml,B03,Rengöring,59
+P038,Polarglans Mikrofiberduk 3-pack,B03,Rengöring,55
+P039,Polarglans Skurborste ergonomisk,B03,Rengöring,39
+P040,Polarglans Fläckborttagare spray 400 ml,B03,Rengöring,52
+P041,Polarglans Maskindisk tabletter 40-pack,B03,Rengöring,99
+P042,Polarglans Avkalkningsmedel 750 ml,B03,Rengöring,46
+P043,Södervik Fläderdryck koncentrat 1 L,B04,Dryck,55
+P044,Södervik Rabarberdryck koncentrat 1 L,B04,Dryck,55
+P045,Södervik Äppelmust 1 L,B04,Dryck,39
+P046,Södervik Päronmust 1 L,B04,Dryck,39
+P047,Södervik Lingondricka 1 L,B04,Dryck,45
+P048,Södervik Svartvinbärssaft 1 L,B04,Dryck,49
+P049,Södervik Sommarsaft Jordgubb 1 L,B04,Dryck,52
+P050,Södervik Glöggextrakt alkoholfri 500 ml,B04,Dryck,69
+P051,Södervik Citronsaft pressad 250 ml,B04,Dryck,29
+P052,Södervik Ingefärsshot 6-pack,B04,Dryck,89
+P053,Södervik Havredryck Barista 1 L,B04,Dryck,25
+P054,Södervik Mineralvatten Citrus 12-pack,B04,Dryck,79
+P055,"Södervik Iste Persika 1,5 L",B04,Dryck,32
+P056,Södervik Tranbärsjuice 1 L,B04,Dryck,47
+P057,Lumo LED-lampa E27 Varmvit 3-pack,B05,Belysning,99
+P058,Lumo LED-lampa E14 Varmvit 3-pack,B05,Belysning,89
+P059,Lumo LED-slinga 10 m utomhus,B05,Belysning,249
+P060,Lumo Bordslampa Skymning,B05,Belysning,399
+P061,Lumo Golvlampa Gryning,B05,Belysning,899
+P062,Lumo LED-spot GU10 5-pack,B05,Belysning,149
+P063,Lumo Smart lampa E27 Wifi,B05,Belysning,199
+P064,Lumo Smart lampa E14 Wifi,B05,Belysning,179
+P065,Lumo Nattlampa barn Molnet,B05,Belysning,159
+P066,Lumo Arbetslampa klämfäste,B05,Belysning,229
+P067,Lumo LED-panel badrum 30 cm,B05,Belysning,349
+P068,Lumo Solcellslampa trädgård 4-pack,B05,Belysning,189
+P069,Lumo Dimmer vrid smart,B05,Belysning,279
+P070,Lumo Ljusslinga inomhus 5 m,B05,Belysning,129
+P071,Vintra Blockljus 10 cm 2-pack,B06,Ljus & Interiör,59
+P072,Vintra Blockljus 15 cm 2-pack,B06,Ljus & Interiör,79
+P073,Vintra Kronljus 8-pack,B06,Ljus & Interiör,69
+P074,Vintra Doftljus Vanilj 40 h,B06,Ljus & Interiör,119
+P075,Vintra Doftljus Havssalt 40 h,B06,Ljus & Interiör,119
+P076,Vintra Doftljus Kanel 40 h,B06,Ljus & Interiör,119
+P077,Vintra Värmeljus 100-pack,B06,Ljus & Interiör,89
+P078,Vintra Ljusstake mässing låg,B06,Ljus & Interiör,199
+P079,Vintra Ljusstake mässing hög,B06,Ljus & Interiör,259
+P080,Vintra Ljuslykta glas stor,B06,Ljus & Interiör,249
+P081,Vintra Doftpinnar Sandelträ,B06,Ljus & Interiör,149
+P082,Vintra Tändstickor långa 3-pack,B06,Ljus & Interiör,29
+P083,Vintra Ljussläckare mässing,B06,Ljus & Interiör,89
+P084,Vintra Adventsljusstake trä,B06,Ljus & Interiör,329
+P085,Kastanj Saltade jordnötter 300 g,B07,Snacks,29
+P086,Kastanj Cashewnötter rostade 250 g,B07,Snacks,49
+P087,Kastanj Chips Havssalt 200 g,B07,Snacks,25
+P088,Kastanj Chips Sourcream 200 g,B07,Snacks,25
+P089,Kastanj Popcorn mikrovågs 3-pack,B07,Snacks,22
+P090,Kastanj Nötmix Luxury 350 g,B07,Snacks,59
+P091,Kastanj Torkad mango 150 g,B07,Snacks,39
+P092,Kastanj Mörk choklad 70% 100 g,B07,Snacks,32
+P093,Kastanj Ljus choklad hasselnöt 100 g,B07,Snacks,32
+P094,Kastanj Lakritsbåtar 350 g,B07,Snacks,35
+P095,Kastanj Vingummi Skogsbär 300 g,B07,Snacks,30
+P096,Kastanj Sesamkex 190 g,B07,Snacks,27
+P097,Kastanj Proteinbar Kakao 55 g,B07,Snacks,22
+P098,Kastanj Majschips Chili 180 g,B07,Snacks,28

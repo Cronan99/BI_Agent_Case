@@ -1,0 +1,6 @@
+user_id,full_name,email,company,role
+U01,Anna Lindqvist,anna.lindqvist@ncg.example.se,Nordic Consumer Goods AB,Produktchef
+U02,Johan Berg,johan.berg@ncg.example.se,Nordic Consumer Goods AB,Key Account Manager
+U03,Maria Holm,maria.holm@helios.example.se,Helios Home & Living AB,Brand Manager
+U04,Erik Sandell,erik.sandell@helios.example.se,Helios Home & Living AB,Försäljningschef
+U05,Sofia Ek,sofia.ek@ncg.example.se,Nordic Consumer Goods AB,Produktchef
