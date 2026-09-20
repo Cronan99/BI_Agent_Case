@@ -22,7 +22,7 @@ if not GEMINI_API_KEY:
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-MODEL = "gemini-3.5-flash"
+MODEL = "gemini-3.6-flash"
 
 
 sales_summary_declaration = types.FunctionDeclaration(
